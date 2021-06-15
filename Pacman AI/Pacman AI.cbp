@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Pacman AI" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Pacman AI" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Pacman AI" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="Constants.h" />
+		<Unit filename="Game.cpp" />
+		<Unit filename="Game.h" />
+		<Unit filename="Ghost.cpp" />
+		<Unit filename="Ghost.h" />
+		<Unit filename="Pacman.cpp" />
+		<Unit filename="Pacman.h" />
+		<Unit filename="Pellet.cpp" />
+		<Unit filename="Pellet.h" />
+		<Unit filename="SetConsoleAttributes.cpp" />
+		<Unit filename="SetConsoleAttributes.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="pacplusplusman.ico" />
+		<Unit filename="resource.h" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
