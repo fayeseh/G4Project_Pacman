@@ -9,3 +9,4 @@
 6. git status (check if in the right branch, not main)
 7. git add filename
 8. git commit -m "Type your message here"
+9. git push
