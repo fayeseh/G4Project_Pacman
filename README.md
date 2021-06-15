@@ -7,7 +7,9 @@
 6. git branch -a
 (if dont have your branch) git checkout -b Faye
 (if have your branch) git checkout Faye
-6. git status (check if in the right branch, not main)
-7. git add filename
-8. git commit -m "Type your message here"
-9. git push
+7. git status (check if in the right branch, not main)
+8. git add filename
+9. git commit -m "Type your message here"
+10. git push
+
+Elise was here
