@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +23,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -43,9 +45,11 @@
 		<Unit filename="Pellet.h" />
 		<Unit filename="SetConsoleAttributes.cpp" />
 		<Unit filename="SetConsoleAttributes.h" />
+		<Unit filename="include/InputDataPreperation.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="pacplusplusman.ico" />
 		<Unit filename="resource.h" />
+		<Unit filename="src/InputDataPreperation.cpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
