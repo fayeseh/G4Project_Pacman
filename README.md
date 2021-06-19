@@ -17,7 +17,7 @@ How to pull updates?
 2. git checkout [branch_name]
 3. git remote -v (this is to verify origin, if not verified) git remote add upstream [website_link]
 4. git fetch upstream (to sync local with upstream)
-5. git merge upstream/main (the main can be changed to each branches if you want a older version)
+5. git merge upstream/main (the main can be changed to each branches if you want other versions)
 
 How to start?  
 1. cd into directory (Desktop)  
@@ -29,6 +29,3 @@ How to start?
 (if dont have your branch) git checkout -b Faye
 (if have your branch) git checkout Faye
 7. git status (check if in the right branch, not main)
-8. git add filename
-9. git commit -m "Type your message here"
-10. git push
