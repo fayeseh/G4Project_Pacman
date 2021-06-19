@@ -19,7 +19,6 @@ private:
     char dir;
     char dirOld;
     char icon;
-    int CountDownTimer;
 
     Game *game;
 
@@ -42,7 +41,6 @@ public:
     int GetLeft()  { return left;  }
     int GetLives() { return lives; }
     int GetSuper() { return super; }
-    int GetCountDownTimer()     { return CountDownTimer; }
 
     void SetY(int y)         { this->y = y;   }
     void SetX(int x)         { this->x = x;   }
@@ -57,7 +55,7 @@ public:
     void SetColor(int c)     { color = c;     }
     void SetDirOld(char d)   { dirOld = d;    }
     void SetIcon(char i)     { icon = i;      }
-    void SetCountDownTimer(int t)   { CountDownTimer = t;}
+
 };
 
 #endif
