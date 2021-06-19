@@ -1,0 +1,56 @@
+# depslib dependency file v1.0
+1624105063 source:c:\users\asus\desktop\g4project_pacman\pacman ai\game.cpp
+	<iostream>
+	<Windows.h>
+	"Constants.h"
+	"Game.h"
+	"Pacman.h"
+	"Ghost.h"
+	"Pellet.h"
+	"SetConsoleAttributes.h"
+
+1624105343 c:\users\asus\desktop\g4project_pacman\pacman ai\constants.h
+	<Windows.h>
+
+1624104711 c:\users\asus\desktop\g4project_pacman\pacman ai\game.h
+	"Constants.h"
+
+1624095172 c:\users\asus\desktop\g4project_pacman\pacman ai\pacman.h
+
+1624095386 c:\users\asus\desktop\g4project_pacman\pacman ai\ghost.h
+
+1623749392 c:\users\asus\desktop\g4project_pacman\pacman ai\pellet.h
+
+1623749392 c:\users\asus\desktop\g4project_pacman\pacman ai\setconsoleattributes.h
+
+1623749392 source:c:\users\asus\desktop\g4project_pacman\pacman ai\ghost.cpp
+	<iostream>
+	"Constants.h"
+	"Game.h"
+	"Ghost.h"
+	"SetConsoleAttributes.h"
+
+1623749392 source:c:\users\asus\desktop\g4project_pacman\pacman ai\main.cpp
+	"Game.h"
+
+1624095338 source:c:\users\asus\desktop\g4project_pacman\pacman ai\pacman.cpp
+	<iostream>
+	<iomanip>
+	<conio.h>
+	<cmath>
+	<Windows.h>
+	"Constants.h"
+	"Game.h"
+	"Pacman.h"
+	"SetConsoleAttributes.h"
+
+1623749392 source:c:\users\asus\desktop\g4project_pacman\pacman ai\pellet.cpp
+	<iostream>
+	"Game.h"
+	"Pellet.h"
+	"SetConsoleAttributes.h"
+
+1623749392 source:c:\users\asus\desktop\g4project_pacman\pacman ai\setconsoleattributes.cpp
+	<Windows.h>
+	"Constants.h"
+
