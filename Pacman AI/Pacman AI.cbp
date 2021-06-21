@@ -37,6 +37,10 @@
 		<Unit filename="Game.h" />
 		<Unit filename="Ghost.cpp" />
 		<Unit filename="Ghost.h" />
+		<Unit filename="Network.cpp" />
+		<Unit filename="Network.h" />
+		<Unit filename="Neuron.cpp" />
+		<Unit filename="Neuron.h" />
 		<Unit filename="Pacman.cpp" />
 		<Unit filename="Pacman.h" />
 		<Unit filename="Pellet.cpp" />
