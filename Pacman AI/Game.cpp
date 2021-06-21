@@ -11,7 +11,7 @@
 
 using namespace std;
 
-Game::Game() {
+Game::Game(Network* neural) {
     SetWindowTitle("PACMAN");
     SetWindowSize(LEVEL_HEIGHT + 4, LEVEL_WIDTH);
     SetCursorVisibility(false);
@@ -20,6 +20,8 @@ Game::Game() {
         ghosts[i] = new Ghost(this);
         pellets[i] = new Pellet(this);
     }
+
+    neuralNet = neural;
 }
 
 Game::~Game() {

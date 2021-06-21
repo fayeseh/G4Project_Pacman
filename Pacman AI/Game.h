@@ -25,8 +25,10 @@ private:
     void MainLoop();
 
 
+
+
 public:
-    Game();
+    Game(Network* neural);
     ~Game();
     void Go();
 
@@ -56,6 +58,8 @@ public:
     void SetPelletColor(int c)          { pelletColor = c;    }
     void SetGhostModeTimer(int t)       { ghostModeTimer = t; }
 
+    //NeuralNetwork things
+    Network* neuralNet;
 };
 
 #endif
