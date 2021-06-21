@@ -54,12 +54,18 @@ void Pacman::GetDirection() { //Where to implement the neural network
     dir = 'x';
 
     vector<double> inputValues;
-
+    inputValues.push_back(GetX());
+    inputValues.push_back(GetY());
+    for(int i = 0; i < 4; ++i) {
+        inputValues.push_back(game->ghosts[i]->GetX());
+        inputValues.push_back(game->ghosts[i]->GetY());
+    }
     game->neuralNet->feedForward(inputValues);
 
     //get result from neural network
     vector<double> result; //store result from neural network in here
     game->neuralNet->getResults(result);
+
 
     int thismove = distance(
         result.begin(),

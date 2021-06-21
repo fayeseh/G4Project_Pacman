@@ -3,9 +3,12 @@
 
 #include "Constants.h"
 #include "Network.h"
+#include "Game.h"
+#include "Ghost.h"
+
 
 class Pacman;
-class Ghost;
+
 class Pellet;
 
 class Game {
@@ -18,9 +21,6 @@ private:
     int ghostModeTimer = MODE_MAX;
 
 
-    Pacman* player;
-    Ghost* ghosts[4];
-    Pellet* pellets[4];
 
     void MainLoop();
 
@@ -60,6 +60,11 @@ public:
 
     //NeuralNetwork things
     Network* neuralNet;
+
+    Pacman* player;
+    Ghost* ghosts[4];
+    Pellet* pellets[4];
+
 };
 
 #endif
