@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "Constants.h"
+#include "Network.h"
 
 class Pacman;
 class Ghost;
@@ -16,11 +17,13 @@ private:
     int pelletColor = WHITE;
     int ghostModeTimer = MODE_MAX;
 
+
     Pacman* player;
     Ghost* ghosts[4];
     Pellet* pellets[4];
 
     void MainLoop();
+
 
 public:
     Game();
@@ -52,6 +55,7 @@ public:
     void SetPelletTimer(int t)          { pelletTimer = t;    }
     void SetPelletColor(int c)          { pelletColor = c;    }
     void SetGhostModeTimer(int t)       { ghostModeTimer = t; }
+
 };
 
 #endif

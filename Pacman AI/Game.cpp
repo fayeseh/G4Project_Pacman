@@ -40,7 +40,7 @@ void Game::MainLoop() {
     player->SetScore(0);
     player->SetLives(3);
     bool gameOver = false;
-    for (int levelNum = 1; levelNum <= 255; ++levelNum) {
+    for (int levelNum = 1; levelNum <= 1; ++levelNum) {
         LoadLevel();
         // while there are still dots on the screen,
         while (player->GetLeft() != 0) {
@@ -63,6 +63,8 @@ void Game::MainLoop() {
         }
         NextLevel();
     }
+
+
 }
 
 void Game::LoadLevel() {

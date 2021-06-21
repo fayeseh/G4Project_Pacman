@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <cmath>
 #include <Windows.h>
+#include <algorithm>
 
 #include "Constants.h"
 
@@ -49,16 +50,36 @@ void Pacman::Move() {
     }
 }
 
-void Pacman::GetDirection() {
+void Pacman::GetDirection() { //Where to implement the neural network
     dir = 'x';
-    // check if the user has entered 'w', 'a', 's' or 'd'
-    if (_kbhit()) {  //checks the console for a recent keystroke
-        dir = tolower(_getch());  //converts a given character to lowercase, read a single character from the console
+    //get neural network
+    vector<float> result; //store result from neural network in here
+
+    result.push_back(0.5);
+    result.push_back(0.4);
+    result.push_back(0.3);
+    result.push_back(0.7);
+
+    int thismove = distance(
+        result.begin(),
+        max_element(result.begin(), result.end())
+    );
+
+    switch(thismove) {
+        case 0:
+            dir = 'w';
+            break;
+        case 1:
+            dir = 'a';
+            break;
+        case 2:
+            dir = 's';
+            break;
+        case 3:
+            dir = 'd';
+            break;
     }
-    // if not, try moving in the same direction as before
-    if (!strchr(ALL_DIRS, dir)) {  //returns the first occurance of a given character
-        dir = dirOld;
-    }
+
 }
 
 bool Pacman::TestForCollision() {
