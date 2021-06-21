@@ -416,7 +416,8 @@ void Game::CheckForDeath() {
         }
     }
 }
- //additional countdown time feature
+
+//additional countdown time feature
 bool Game::CountDownTime(){
 
     CountDownTimer--;
