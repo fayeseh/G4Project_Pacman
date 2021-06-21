@@ -22,6 +22,11 @@ Neuron::Neuron(unsigned numOutputs, unsigned index)
 //function to calculate input with weights
 void Neuron::calculateOutput(Layer &prevLayer)
 {
+//    cout<<"Hi" <<endl;
+//    for (int i = 0; i < prevLayer.size(); ++i) {
+//        cout <<prevLayer.at(i).getOutputVal() <<"\t";
+//    }
+//     cout<<endl <<"bye" <<endl;
     double sum = 0.0;
     //all previous layer neuron's output * weight
     //add above result into sum
@@ -29,6 +34,7 @@ void Neuron::calculateOutput(Layer &prevLayer)
         sum += prevLayer[n].getOutputVal() * prevLayer[n].N_weights[N_index];
     //call transfer function to modify the total sum
     //set modified sum into output of neuron
+
     N_outputVal = Neuron::transferFunction(sum);
 }
 

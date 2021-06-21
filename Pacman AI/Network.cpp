@@ -32,7 +32,7 @@ Network::Network(vector<unsigned> &topology)
             NW_layers.back().push_back(Neuron(numOutputs, neuronNum));
         }
         //set value of 1 for bias neuron
-        NW_layers.back().back().setOutputVal(1.0);
+        NW_layers.back().back().setOutputVal(0.01);
     }
 }
 
@@ -46,10 +46,12 @@ void Network::feedForward(vector<double> &inputVal)
     //set values to first layer input neurons
     for(unsigned neuronNum = 0; neuronNum < inputVal.size(); neuronNum++)
         NW_layers[0][neuronNum].setOutputVal(inputVal[neuronNum]);
+        //cout<< NW_layers[0][neuronNum].getOutputVal() <<"\t";
 
     //calculate this layer's neuron outputs
     for(unsigned layerNum = 1; layerNum < NW_layers.size(); layerNum++)
     {
+        //cout<<endl<<layerNum <<endl;
         //set pointer to previous layer
         Layer &prevLayer = NW_layers[layerNum - 1];
         //pass previous layer's neuron output values
