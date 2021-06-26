@@ -20,6 +20,7 @@ private:
     int pelletColor = WHITE;
     int ghostModeTimer = MODE_MAX;
     int CountDownTimer = DOWN_MAX;
+    bool gameEnd = false;
 
 
 

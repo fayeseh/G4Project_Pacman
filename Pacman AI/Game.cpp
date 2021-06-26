@@ -31,7 +31,7 @@ Game::~Game() {
 }
 
 void Game::Go() {
-    while (true) {
+    while (!gameEnd) {
         MainLoop();
     }
 }
@@ -39,7 +39,7 @@ void Game::Go() {
 void Game::MainLoop() {
 
     player->SetScore(0); //begining score=0
-    player->SetLives(1); //have 3 lives
+    player->SetLives(1); //has 1 life
     bool gameOver = false;
 
     for (int levelNum = 1; levelNum <= 1; ++levelNum) {
@@ -74,11 +74,8 @@ void Game::MainLoop() {
             }
             UpdateTimers();
         }
-
         NextLevel();
     }
-
-
 }
 
 void Game::LoadLevel() {
@@ -201,10 +198,10 @@ void Game::LoadLevel() {
                 level[y][x] = char(250); //char 250 is a small square symbol
                 player->SetLeft(player->GetLeft() + 1);
                 break;
-            case ' ': //*whats this for?
+            case ' ':
                 level[y][x] = curChar;
                 break;
-            case '&': //*whats this for?
+            case '&':
                 SetTextColor(WHITE);
                 curChar = '%';
             }
@@ -285,6 +282,7 @@ void Game::PrintGameOver() {
     SetTextColor(RED);
     cout << "GAME  OVER";
     Sleep(1000);
+    gameEnd = true;  //go() while loop ends
 }
 
 void Game::MoveGhosts() {
