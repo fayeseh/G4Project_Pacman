@@ -2,9 +2,13 @@
 #define GAME_H
 
 #include "Constants.h"
+#include "Network.h"
+#include "Game.h"
+#include "Ghost.h"
+
 
 class Pacman;
-class Ghost;
+
 class Pellet;
 
 class Game {
@@ -17,14 +21,15 @@ private:
     int ghostModeTimer = MODE_MAX;
     int CountDownTimer = DOWN_MAX;
 
-    Pacman* player;
-    Ghost* ghosts[4];
-    Pellet* pellets[4];
+
 
     void MainLoop();
 
+
+
+
 public:
-    Game();
+    Game(Network* neural);
     ~Game();
     void Go();
 
@@ -56,6 +61,13 @@ public:
     void SetPelletColor(int c)          { pelletColor = c;    }
     void SetGhostModeTimer(int t)       { ghostModeTimer = t; }
     void SetCountDownTimer(int t)       { CountDownTimer = t; }
+
+    //NeuralNetwork things
+    Network* neuralNet;
+
+    Pacman* player;
+    Ghost* ghosts[4];
+    Pellet* pellets[4];
 };
 
 #endif

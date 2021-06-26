@@ -1,6 +1,9 @@
 #ifndef GHOST_H
 #define GHOST_H
 
+
+
+
 class Game;
 
 class Ghost {
@@ -21,6 +24,7 @@ private:
     Game *game;
 
 public:
+
     Ghost(Game *const g);
     void Move(int, int);
     void TargetObject(bool[4]);

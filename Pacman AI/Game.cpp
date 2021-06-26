@@ -9,8 +9,8 @@
 
 using namespace std;
 
-Game::Game() {
-    SetWindowTitle("PAC++MAN");
+Game::Game(Network* neural) {
+    SetWindowTitle("PACMAN");
     SetWindowSize(LEVEL_HEIGHT + 4, LEVEL_WIDTH);
     SetCursorVisibility(false);
     player = new Pacman(this);
@@ -18,6 +18,8 @@ Game::Game() {
         ghosts[i] = new Ghost(this);
         pellets[i] = new Pellet(this);
     }
+
+    neuralNet = neural;
 }
 
 Game::~Game() {
@@ -39,8 +41,9 @@ void Game::MainLoop() {
     player->SetScore(0); //begining score=0
     player->SetLives(1); //have 3 lives
     bool gameOver = false;
-    for (int levelNum = 1; levelNum <= 255; ++levelNum) {
-        LoadLevel(); //print the map (line 66)
+
+    for (int levelNum = 1; levelNum <= 1; ++levelNum) {
+        LoadLevel();
         // while there are still dots on the screen,
 
         while (player->GetLeft() != 0) {
@@ -74,6 +77,8 @@ void Game::MainLoop() {
 
         NextLevel();
     }
+
+
 }
 
 void Game::LoadLevel() {

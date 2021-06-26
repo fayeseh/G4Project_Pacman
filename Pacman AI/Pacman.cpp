@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <cmath>
 #include <Windows.h>
+#include <algorithm>
 
 #include "Constants.h"
 
@@ -50,16 +51,44 @@ void Pacman::Move() {
     }
 }
 
-void Pacman::GetDirection() {
+void Pacman::GetDirection() { //Where to implement the neural network
     dir = 'x';
-    // check if the user has entered 'w', 'a', 's' or 'd'
-    if (_kbhit()) {  //checks the console for a recent keystroke
-        dir = tolower(_getch());  //converts a given character to lowercase, read a single character from the console
+
+    vector<double> inputValues;
+    inputValues.push_back(GetX()/28.0);
+    inputValues.push_back(GetY()/31.0);
+    for(int i = 0; i < 4; ++i) {
+        inputValues.push_back(game->ghosts[i]->GetX()/28.0);
+        inputValues.push_back(game->ghosts[i]->GetY()/31.0);
     }
-    // if not, try moving in the same direction as before
-    if (!strchr(ALL_DIRS, dir)) {  //returns the first occurance of a given character
-        dir = dirOld;
+    game->neuralNet->feedForward(inputValues);
+    //cout<<inputValues.at(0);
+
+    //get result from neural network
+    vector<double> result; //store result from neural network in here
+    game->neuralNet->getResults(result);
+
+
+    int thismove = distance(
+        result.begin(),
+        max_element(result.begin(), result.end())
+    );
+
+    switch(thismove) {
+        case 0:
+            dir = 'w';
+            break;
+        case 1:
+            dir = 'a';
+            break;
+        case 2:
+            dir = 's';
+            break;
+        case 3:
+            dir = 'd';
+            break;
     }
+
 }
 
 bool Pacman::TestForCollision() {
