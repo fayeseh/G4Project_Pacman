@@ -1,9 +1,16 @@
 #include "Game.h"
 #include "Network.h"
-
-int main() {
-
-    //initialize neural network
+#include <Windows.h>
+#include <iostream>
+#include <thread>
+#include "Game.h"
+using namespace std;
+void gamecycle(int iterations)
+{
+    int loop=0;
+    while (loop< iterations)
+    {
+       //initialize neural network
     unsigned numData = 10;
     unsigned numNeurons = 5;  //in hidden layers
     unsigned numOutput = 4;  //w,a,s,d
@@ -20,6 +27,21 @@ int main() {
     Game* game = new Game(&testNet);
     game->Go();
     delete game;
+    loop ++;
+    }
+
+}
+int main() {
+
+
+    thread th1(gamecycle,1);
+    thread th2(gamecycle,1);
+
+    th1.join();
+    th2.join();
+
+
+
     return 0;
 }
 
