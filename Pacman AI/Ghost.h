@@ -1,6 +1,9 @@
 #ifndef GHOST_H
 #define GHOST_H
 
+
+
+
 class Game;
 
 class Ghost {
@@ -16,10 +19,12 @@ private:
     char mode;
     char modeOld;
     char icon;
+    int CountDownTimer;
 
     Game *game;
 
 public:
+
     Ghost(Game *const g);
     void Move(int, int);
     void TargetObject(bool[4]);

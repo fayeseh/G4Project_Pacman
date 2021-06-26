@@ -35,6 +35,7 @@ const int GHOST_MAX   = 10;
 const int RUN_MAX     = 16;
 const int DEAD_MAX    = 3;
 const int MODE_MAX    = 1000;
+const int DOWN_MAX    = 4500;
 
 // Ghost Names
 const int BLINKY = 0;

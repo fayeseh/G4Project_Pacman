@@ -1,8 +1,6 @@
 #include <iostream>
 #include <Windows.h>
-
 #include "Constants.h"
-
 #include "Game.h"
 #include "Pacman.h"
 #include "Ghost.h"
@@ -11,7 +9,7 @@
 
 using namespace std;
 
-Game::Game() {
+Game::Game(Network* neural) {
     SetWindowTitle("PACMAN");
     SetWindowSize(LEVEL_HEIGHT + 4, LEVEL_WIDTH);
     SetCursorVisibility(false);
@@ -20,6 +18,8 @@ Game::Game() {
         ghosts[i] = new Ghost(this);
         pellets[i] = new Pellet(this);
     }
+
+    neuralNet = neural;
 }
 
 Game::~Game() {
@@ -31,25 +31,41 @@ Game::~Game() {
 }
 
 void Game::Go() {
-    while (true) {
+    while (!gameEnd) {
         MainLoop();
     }
 }
 
 void Game::MainLoop() {
-    player->SetScore(0);
-    player->SetLives(3);
+
+    player->SetScore(0); //begining score=0
+    player->SetLives(1); //has 1 life
     bool gameOver = false;
-    for (int levelNum = 1; levelNum <= 255; ++levelNum) {
+
+    for (int levelNum = 1; levelNum <= 1; ++levelNum) {
         LoadLevel();
         // while there are still dots on the screen,
+
         while (player->GetLeft() != 0) {
-            player->Move();
-            CheckForDeath();
+
+            if (gameOver) {break;}
+
+            player->Move(); // check for user input every time the wait timer reaches 0
+
+            SetCursorPosition(-2, 24);
+            SetTextColor(WHITE);
+            if (CountDownTimer<100) cout << "0" << CountDownTimer;
+            else  cout << CountDownTimer; //to print the countdown timer
+
+            if (CountDownTime()){ //if the countdowntime=0, the game ends
+                gameOver=true;
+                break;}
+
             if (!player->GetLives()) {
                 gameOver = true;
                 break;
             }
+
             MoveGhosts();
             CheckForDeath();
             if (!player->GetLives()) {
@@ -58,14 +74,12 @@ void Game::MainLoop() {
             }
             UpdateTimers();
         }
-        if (gameOver) {
-            break;
-        }
         NextLevel();
     }
 }
 
 void Game::LoadLevel() {
+
     char levelMap[LEVEL_HEIGHT][LEVEL_WIDTH + 1] = {
         "1555555555555555555555555552",
         "6............^^............6",
@@ -98,15 +112,24 @@ void Game::LoadLevel() {
         "6.#%%%%%%%%$.#$.#%%%%%%%%$.6",
         "6..........................6",
         "3555555555555555555555555554"};
+
     char curChar;
     SetTextColor(WHITE);
     SetCursorPosition(-3, 3);
     cout << "1UP";
+
     SetCursorPosition(-3, 9);
     cout << "HIGH SCORE";
+
+    SetCursorPosition(-3, 21);
+    cout << "TIMER";
+    CountDownTimer = DOWN_MAX; //set the countdown time for 1 minute 15 seconds
+
+    SetCursorPosition(-5,21);
     player->PrintScore(0);
-    SetCursorPosition(0, 0);
+    SetCursorPosition(0,0);
     player->SetLeft(0);
+
     for (int y = 0; y < LEVEL_HEIGHT; ++y) {
         for (int x = 0; x < LEVEL_WIDTH; ++x) {
             curChar = levelMap[y][x];
@@ -142,7 +165,7 @@ void Game::LoadLevel() {
                 ghosts[CLYDE]->SetColorInit(YELLOW);
                 level[y][x] = ' ';
                 break;
-            case '7':
+            case '7': //pALLETS= 'O'
                 pellets[0]->SetY(y);
                 pellets[0]->SetX(x);
                 SetTextColor(WHITE);
@@ -172,7 +195,7 @@ void Game::LoadLevel() {
                 break;
             case '.':
                 SetTextColor(WHITE);
-                level[y][x] = char(250);
+                level[y][x] = char(250); //char 250 is a small square symbol
                 player->SetLeft(player->GetLeft() + 1);
                 break;
             case ' ':
@@ -183,27 +206,27 @@ void Game::LoadLevel() {
                 curChar = '%';
             }
             if (curChar == '1') {
-                level[y][x] = char(201);
+                level[y][x] = char(201); //wall symbol
             }
             else if (curChar == '2') {
-                level[y][x] = char(187);
+                level[y][x] = char(187); //wall symbol
             }
-            else if (curChar == '3') {
+            else if (curChar == '3') {   //wall symbol
                 level[y][x] = char(200);
             }
-            else if (curChar == '4') {
+            else if (curChar == '4') {    //wall symbol
                 level[y][x] = char(188);
             }
-            else if (curChar == '5') {
+            else if (curChar == '5') { //wall symbol
                 level[y][x] = char(205);
             }
-            else if (curChar == '6') {
+            else if (curChar == '6') { //wall symbol
                 level[y][x] = char(186);
             }
-            else if (curChar == '!') {
+            else if (curChar == '!') { //wall symbol
                 level[y][x] = char(218);
             }
-            else if (curChar == '@') {
+            else if (curChar == '@') { //wall symbol
                 level[y][x] = char(191);
             }
             else if (curChar == '#') {
@@ -259,6 +282,7 @@ void Game::PrintGameOver() {
     SetTextColor(RED);
     cout << "GAME  OVER";
     Sleep(1000);
+    gameEnd = true;  //go() while loop ends
 }
 
 void Game::MoveGhosts() {
@@ -356,6 +380,7 @@ void Game::UpdateTimers() {
         ShowAll();
         pelletTimer = PELLET_MAX;
     }
+
     // handle ghost chase/scatter mode
     if (ghostModeTimer) {
         --ghostModeTimer;
@@ -375,10 +400,12 @@ void Game::UpdateTimers() {
         }
         ghostModeTimer = MODE_MAX;
     }
+
     Sleep(15);
 }
 
 void Game::CheckForDeath() {
+
     for (int i = 0; i < 4; ++i) {
         if (player->GetX() == ghosts[i]->GetX() && player->GetY() == ghosts[i]->GetY() &&
             ghosts[i]->GetMode() != 'd' && ghosts[i]->GetMode() != 'n') {
@@ -393,7 +420,16 @@ void Game::CheckForDeath() {
     }
 }
 
-void Game::ShowAll() {
+//additional countdown time feature
+bool Game::CountDownTime(){
+
+    CountDownTimer--;
+    if(CountDownTimer<0){return true;}
+
+    return false;
+}
+
+void Game::ShowAll(){
     player->Show();
     for (int i = 0; i < 4; ++i) {
         ghosts[i]->Show();
