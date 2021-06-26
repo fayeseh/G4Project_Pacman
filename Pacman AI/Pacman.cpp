@@ -6,7 +6,6 @@
 #include <algorithm>
 
 #include "Constants.h"
-
 #include "Game.h"
 #include "Pacman.h"
 #include "SetConsoleAttributes.h"

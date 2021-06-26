@@ -17,7 +17,11 @@ int main() {
     topology.push_back(numOutput);
     Network testNet (topology);
 
-    Game* game = new Game(&testNet);
+    //Console Logger initializatiion
+    CConsoleLogger* cLogger = new CConsoleLogger();
+    cLogger->Create();
+
+    Game* game = new Game(&testNet, cLogger);
     game->Go();
     delete game;
     return 0;

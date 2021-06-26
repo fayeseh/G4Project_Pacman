@@ -5,6 +5,7 @@
 #include "Network.h"
 #include "Game.h"
 #include "Ghost.h"
+#include "ConsoleLogger.h"
 
 
 class Pacman;
@@ -30,7 +31,7 @@ private:
 
 
 public:
-    Game(Network* neural);
+    Game(Network* neural, CConsoleLogger* Logger);
     ~Game();
     void Go();
 
@@ -69,6 +70,9 @@ public:
     Pacman* player;
     Ghost* ghosts[4];
     Pellet* pellets[4];
+
+    //Console Logger
+    CConsoleLogger* conLogger;
 };
 
 #endif

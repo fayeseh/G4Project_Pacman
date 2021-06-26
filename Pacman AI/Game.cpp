@@ -6,10 +6,11 @@
 #include "Ghost.h"
 #include "Pellet.h"
 #include "SetConsoleAttributes.h"
+#include "ConsoleLogger.h"
 
 using namespace std;
 
-Game::Game(Network* neural) {
+Game::Game(Network* neural, CConsoleLogger *Logger) {
     SetWindowTitle("PACMAN");
     SetWindowSize(LEVEL_HEIGHT + 4, LEVEL_WIDTH);
     SetCursorVisibility(false);
@@ -19,6 +20,7 @@ Game::Game(Network* neural) {
         pellets[i] = new Pellet(this);
     }
 
+    conLogger = Logger;
     neuralNet = neural;
 }
 
