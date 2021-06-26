@@ -55,6 +55,7 @@ public:
     void SetColor(int c)     { color = c;     }
     void SetDirOld(char d)   { dirOld = d;    }
     void SetIcon(char i)     { icon = i;      }
+
 };
 
 #endif

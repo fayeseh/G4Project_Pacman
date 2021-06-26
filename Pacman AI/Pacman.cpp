@@ -20,6 +20,7 @@ Pacman::Pacman(Game *const g)
 
 // check for user input every time the wait timer reaches 0
 void Pacman::Move() {
+
     if (wait) {
         --wait;
     }

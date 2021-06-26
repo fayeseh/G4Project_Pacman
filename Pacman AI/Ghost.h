@@ -19,6 +19,7 @@ private:
     char mode;
     char modeOld;
     char icon;
+    int CountDownTimer;
 
     Game *game;
 

@@ -19,6 +19,7 @@ private:
     int pelletTimer = PELLET_MAX;
     int pelletColor = WHITE;
     int ghostModeTimer = MODE_MAX;
+    int CountDownTimer = DOWN_MAX;
 
 
 
@@ -43,6 +44,7 @@ public:
     void ShowAll();
     void HideAll();
     void InitAll();
+    bool CountDownTime();
 
     char GetLevel(int y, int x) { return level[y][x];    }
     int GetOneUpTimer()         { return oneUpTimer;     }
@@ -50,6 +52,7 @@ public:
     int GetPelletTimer()        { return pelletTimer;    }
     int GetPelletColor()        { return pelletColor;    }
     int GetGhostModeTimer()     { return ghostModeTimer; }
+    int GetCountDownTimer()     { return CountDownTimer; }
 
     void SetLevel(int y, int x, char c) { level[y][x] = c;    }
     void SetOneUpTimer(int t)           { oneUpTimer = t;     }
@@ -57,6 +60,7 @@ public:
     void SetPelletTimer(int t)          { pelletTimer = t;    }
     void SetPelletColor(int c)          { pelletColor = c;    }
     void SetGhostModeTimer(int t)       { ghostModeTimer = t; }
+    void SetCountDownTimer(int t)       { CountDownTimer = t; }
 
     //NeuralNetwork things
     Network* neuralNet;
@@ -64,7 +68,6 @@ public:
     Pacman* player;
     Ghost* ghosts[4];
     Pellet* pellets[4];
-
 };
 
 #endif
