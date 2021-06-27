@@ -18,10 +18,10 @@ int main() {
     Network testNet (topology);
 
     //Console Logger initializatiion
-    CConsoleLogger* cLogger = new CConsoleLogger();
-    cLogger->Create();
+    CConsoleLoggerEx* cLoggerEx = new CConsoleLoggerEx();
+    cLoggerEx->Create("PACMAN");
 
-    Game* game = new Game(&testNet, cLogger);
+    Game* game = new Game(&testNet, cLoggerEx);
     game->Go();
     delete game;
     return 0;

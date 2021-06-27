@@ -1,6 +1,8 @@
 #ifndef PACMAN_H
 #define PACMAN_H
 
+#include "ConsoleLogger.h"
+
 class Game;
 
 class Pacman {
@@ -24,15 +26,15 @@ private:
 
 public:
     Pacman(Game *const g);
-    void Move();
+    void Move(CConsoleLoggerEx *Logger);
     void GetDirection();
     bool TestForCollision();
-    void PrintScore(int);
-    void PrintLives();
-    void PrintKillScore();
-    void Dead();
-    void Show();
-    void Hide();
+    void PrintScore(int, CConsoleLoggerEx *Logger);
+    void PrintLives(CConsoleLoggerEx *Logger);
+    void PrintKillScore(CConsoleLoggerEx *Logger);
+    void Dead(CConsoleLoggerEx *Logger);
+    void Show(CConsoleLoggerEx *Logger);
+    void Hide(CConsoleLoggerEx *Logger);
 
     int GetY()     { return y;     }
     int GetX()     { return x;     }

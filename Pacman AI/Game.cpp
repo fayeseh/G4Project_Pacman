@@ -1,5 +1,7 @@
 #include <iostream>
 #include <Windows.h>
+#include <string>
+
 #include "Constants.h"
 #include "Game.h"
 #include "Pacman.h"
@@ -10,17 +12,18 @@
 
 using namespace std;
 
-Game::Game(Network* neural, CConsoleLogger *Logger) {
-    SetWindowTitle("PACMAN");
+Game::Game(Network* neural, CConsoleLoggerEx *Logger) {
+    SetWindowTitle("PACMAN_AI");
     SetWindowSize(LEVEL_HEIGHT + 4, LEVEL_WIDTH);
     SetCursorVisibility(false);
+
     player = new Pacman(this);
     for (int i = 0; i < 4; ++i) {
         ghosts[i] = new Ghost(this);
         pellets[i] = new Pellet(this);
     }
 
-    conLogger = Logger;
+    conLogger = Logger;  //pointer for CCloggerEx class
     neuralNet = neural;
 }
 
@@ -52,12 +55,25 @@ void Game::MainLoop() {
 
             if (gameOver) {break;}
 
-            player->Move(); // check for user input every time the wait timer reaches 0
+            player->Move(conLogger); // check for user input every time the wait timer reaches 0
 
             SetCursorPosition(-2, 24);
+            conLogger->gotoxy(24, 1);
             SetTextColor(WHITE);
-            if (CountDownTimer<100) cout << "0" << CountDownTimer;
-            else  cout << CountDownTimer; //to print the countdown timer
+
+            if (CountDownTimer<100) {
+                cout << "0" << CountDownTimer;
+                conLogger->gotoxy(25, 1);
+                string CDT = to_string(CountDownTimer); //convert int to string
+                char* cdt = &CDT[0];  //convert string to char*
+                conLogger->cprintf(WHITE, cdt);
+            }
+            else {
+                cout << CountDownTimer; //to print the countdown timer
+                string CDT = to_string(CountDownTimer); //convert int to string
+                char* cdt = &CDT[0];
+                conLogger->cprintf(WHITE, cdt);
+            }
 
             if (CountDownTime()){ //if the countdowntime=0, the game ends
                 gameOver=true;
@@ -118,18 +134,26 @@ void Game::LoadLevel() {
     char curChar;
     SetTextColor(WHITE);
     SetCursorPosition(-3, 3);
+    conLogger->gotoxy(3, 0);
     cout << "1UP";
+    conLogger->cprintf(WHITE, "1UP");
 
     SetCursorPosition(-3, 9);
+    conLogger->gotoxy(9, 0);
     cout << "HIGH SCORE";
+    conLogger->cprintf(WHITE, "HIGH SCORE");
 
     SetCursorPosition(-3, 21);
+    conLogger->gotoxy(21, 0);
     cout << "TIMER";
+    conLogger->cprintf(WHITE, "TIMER");
     CountDownTimer = DOWN_MAX; //set the countdown time for 1 minute 15 seconds
 
-    SetCursorPosition(-5,21);
-    player->PrintScore(0);
-    SetCursorPosition(0,0);
+    SetCursorPosition(-5, 21);
+    conLogger->gotoxy(21, -2);
+    player->PrintScore(0, conLogger);  //HOW TO SETTLE FOR OTHER CONSOLES
+    SetCursorPosition(0, 0);
+    conLogger->gotoxy(0, 3);
     player->SetLeft(0);
 
     for (int y = 0; y < LEVEL_HEIGHT; ++y) {
@@ -207,28 +231,28 @@ void Game::LoadLevel() {
                 SetTextColor(WHITE);
                 curChar = '%';
             }
-            if (curChar == '1') {
-                level[y][x] = char(201); //wall symbol
+            if (curChar == '1') {  //wall symbol
+                level[y][x] = char(201);
             }
-            else if (curChar == '2') {
-                level[y][x] = char(187); //wall symbol
+            else if (curChar == '2') {  //wall symbol
+                level[y][x] = char(187);
             }
-            else if (curChar == '3') {   //wall symbol
+            else if (curChar == '3') {  //wall symbol
                 level[y][x] = char(200);
             }
-            else if (curChar == '4') {    //wall symbol
+            else if (curChar == '4') {  //wall symbol
                 level[y][x] = char(188);
             }
-            else if (curChar == '5') { //wall symbol
+            else if (curChar == '5') {  //wall symbol
                 level[y][x] = char(205);
             }
-            else if (curChar == '6') { //wall symbol
+            else if (curChar == '6') {  //wall symbol
                 level[y][x] = char(186);
             }
-            else if (curChar == '!') { //wall symbol
+            else if (curChar == '!') {  //wall symbol
                 level[y][x] = char(218);
             }
-            else if (curChar == '@') { //wall symbol
+            else if (curChar == '@') {  //wall symbol
                 level[y][x] = char(191);
             }
             else if (curChar == '#') {
@@ -244,12 +268,16 @@ void Game::LoadLevel() {
                 level[y][x] = char(179);
             }
             cout << level[y][x];
+            char* lvl = &level[y][x];
+            conLogger->cprintf(lvl);
         }
         SetCursorPosition(y + 1, 0);
+        int baseCursor = 3;  //y+3
+        conLogger->gotoxy(0, baseCursor+y+1);
     }
     InitAll();
     ShowAll();
-    player->PrintLives();
+    player->PrintLives(conLogger);
     PrintReady();
 }
 
@@ -257,32 +285,41 @@ void Game::NextLevel() {
     Sleep(1000);
     HideAll();
     SetCursorPosition(12, 13);
+    conLogger->gotoxy(13, 15);
     cout << "  ";
+    conLogger->cprintf(" ");
     for (int i = 0; i < 4; ++i) {
         SetScreenColor(WHITE);
-        player->Show();
+        player->Show(conLogger);
         Sleep(200);
         SetScreenColor(DARK_BLUE);
-        player->Show();
+        player->Show(conLogger);
         Sleep(200);
     }
     SetCursorPosition(0, 0);
+    conLogger->gotoxy(0, 3);
     InitAll();
 }
 
 void Game::PrintReady() {
     SetTextColor(YELLOW);
     SetCursorPosition(17, 11);
+    conLogger->gotoxy(11, 20);
     cout << "READY!";
+    conLogger->cprintf(YELLOW, "READY!");
     Sleep(2000);
     SetCursorPosition(17, 11);
+    conLogger->gotoxy(11, 20);
     cout << "      ";
+    conLogger->cprintf("      ");
 }
 
 void Game::PrintGameOver() {
     SetCursorPosition(17, 9);
+    conLogger->gotoxy(9, 20);
     SetTextColor(RED);
     cout << "GAME  OVER";
+    conLogger->cprintf(RED, "GAME  OVER");
     Sleep(1000);
     gameEnd = true;  //go() while loop ends
 }
@@ -311,7 +348,7 @@ void Game::MoveGhosts() {
         ghosts[CLYDE]->SetMode('e');
     }
     for (int i = 0; i < 4; ++i) {
-        ghosts[i]->Move(player->GetY(), player->GetX());
+        ghosts[i]->Move(player->GetY(), player->GetX(), conLogger);
     }
     ShowAll();
 }
@@ -361,7 +398,9 @@ void Game::UpdateTimers() {
         }
         SetTextColor(oneUpColor);
         SetCursorPosition(-3, 3);
+        conLogger->gotoxy(3, 0);
         cout << "1UP";
+        conLogger->cprintf("1UP");
         oneUpTimer = ONE_UP_MAX;
     }
     // handle flashing super pellets
@@ -377,7 +416,7 @@ void Game::UpdateTimers() {
         }
         SetTextColor(pelletColor);
         for (int i = 0; i < 4; ++i) {
-            pellets[i]->Print();
+            pellets[i]->Print(conLogger);
         }
         ShowAll();
         pelletTimer = PELLET_MAX;
@@ -412,10 +451,10 @@ void Game::CheckForDeath() {
         if (player->GetX() == ghosts[i]->GetX() && player->GetY() == ghosts[i]->GetY() &&
             ghosts[i]->GetMode() != 'd' && ghosts[i]->GetMode() != 'n') {
             if (ghosts[i]->GetMode() != 'r') {
-                player->Dead();
+                player->Dead(conLogger);
             }
             else {
-                player->PrintKillScore();
+                player->PrintKillScore(conLogger);
                 ghosts[i]->Dead();
             }
         }
@@ -426,22 +465,24 @@ void Game::CheckForDeath() {
 bool Game::CountDownTime(){
 
     CountDownTimer--;
-    if(CountDownTimer<0){return true;}
-
-    return false;
+    if(CountDownTimer<0) {
+        return true;
+    }
+    else
+        return false;
 }
 
 void Game::ShowAll(){
-    player->Show();
+    player->Show(conLogger);
     for (int i = 0; i < 4; ++i) {
-        ghosts[i]->Show();
+        ghosts[i]->Show(conLogger);
     }
 }
 
 void Game::HideAll() {
-    player->Hide();
+    player->Hide(conLogger);
     for (int i = 0; i < 4; ++i) {
-        ghosts[i]->Hide();
+        ghosts[i]->Hide(conLogger);
     }
 }
 

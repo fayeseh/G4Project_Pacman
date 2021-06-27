@@ -7,7 +7,6 @@
 #include "Ghost.h"
 #include "ConsoleLogger.h"
 
-
 class Pacman;
 
 class Pellet;
@@ -23,15 +22,10 @@ private:
     int CountDownTimer = DOWN_MAX;
     bool gameEnd = false;
 
-
-
     void MainLoop();
 
-
-
-
 public:
-    Game(Network* neural, CConsoleLogger* Logger);
+    Game(Network* neural, CConsoleLoggerEx* Logger);
     ~Game();
     void Go();
 
@@ -72,7 +66,7 @@ public:
     Pellet* pellets[4];
 
     //Console Logger
-    CConsoleLogger* conLogger;
+    CConsoleLoggerEx* conLogger;
 };
 
 #endif
