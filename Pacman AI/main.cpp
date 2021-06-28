@@ -1,7 +1,20 @@
 #include "Game.h"
 #include "Network.h"
 
+#include <thread>
+
+using namespace std;
+
+void createGame(CConsoleLoggerEx *Logger, Network *net, int &high) {
+    //run pacman game
+    Game* game = new Game(net, Logger);
+    game->Go(high);
+    delete game;
+}
+
 int main() {
+
+    Network* nHolder[3];
 
     //initialize neural network
     unsigned numData = 10;
@@ -15,15 +28,35 @@ int main() {
     topology.push_back(numNeurons);
     //last layer
     topology.push_back(numOutput);
-    Network testNet (topology);
 
-    //Console Logger initializatiion
-    CConsoleLoggerEx* cLoggerEx = new CConsoleLoggerEx();
-    cLoggerEx->Create("PACMAN");
+    for(int i = 0; i < 3; i++)
+    {
+        Network *testNet = new Network(topology);
+        nHolder[i] = testNet;
+    }
 
-    Game* game = new Game(&testNet, cLoggerEx);
-    game->Go();
-    delete game;
+    int hHolder[3];  //for pass by reference high score
+
+    CConsoleLoggerEx* cHolder[3];
+
+    for(int i = 0; i < 3; i++) {
+        CConsoleLoggerEx* cx = new CConsoleLoggerEx();
+        cx->Create("PACMAN");
+        cHolder[i] = cx;
+    }
+
+    thread t1(createGame, cHolder[0], nHolder[0], ref(hHolder[0]));
+    thread t2(createGame, cHolder[1], nHolder[1], ref(hHolder[1]));
+    thread t3(createGame, cHolder[2], nHolder[2], ref(hHolder[2]));
+
+    t1.join();
+    t2.join();
+    t3.join();
+
+    cout << "high score 1: " << hHolder[0] << endl;
+    cout << "high score 2: " << hHolder[1] << endl;
+    cout << "high score 3: " << hHolder[2] << endl;
+
     return 0;
 }
 

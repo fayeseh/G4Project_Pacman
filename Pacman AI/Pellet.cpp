@@ -12,7 +12,7 @@ Pellet::Pellet(Game *const g)
 
 void Pellet::Print(CConsoleLoggerEx *Logger) {
     SetCursorPosition(y, x);
-    cout << game->GetLevel(y, x);
+    //cout << game->GetLevel(y, x);
 
     Logger->gotoxy(x, y+3);
     char LVL = game->GetLevel(y, x);

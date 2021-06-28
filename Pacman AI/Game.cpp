@@ -12,7 +12,7 @@
 
 using namespace std;
 
-Game::Game(Network* neural, CConsoleLoggerEx *Logger) {
+Game::Game(Network *neural, CConsoleLoggerEx *Logger) {
     SetWindowTitle("PACMAN_AI");
     SetWindowSize(LEVEL_HEIGHT + 4, LEVEL_WIDTH);
     SetCursorVisibility(false);
@@ -35,13 +35,13 @@ Game::~Game() {
     }
 }
 
-void Game::Go() {
+void Game::Go(int &high) {
     while (!gameEnd) {
-        MainLoop();
+        MainLoop(high);
     }
 }
 
-void Game::MainLoop() {
+void Game::MainLoop(int &high) {
 
     player->SetScore(0); //begining score=0
     player->SetLives(1); //has 1 life
@@ -62,14 +62,14 @@ void Game::MainLoop() {
             SetTextColor(WHITE);
 
             if (CountDownTimer<100) {
-                cout << "0" << CountDownTimer;
+                //cout << "0" << CountDownTimer;
                 conLogger->gotoxy(25, 1);
                 string CDT = to_string(CountDownTimer); //convert int to string
                 char* cdt = &CDT[0];  //convert string to char*
                 conLogger->cprintf(WHITE, cdt);
             }
             else {
-                cout << CountDownTimer; //to print the countdown timer
+                //cout << CountDownTimer; //to print the countdown timer
                 string CDT = to_string(CountDownTimer); //convert int to string
                 char* cdt = &CDT[0];
                 conLogger->cprintf(WHITE, cdt);
@@ -94,6 +94,7 @@ void Game::MainLoop() {
         }
         NextLevel();
     }
+    high = player->hiScore;  //set high score from game
 }
 
 void Game::LoadLevel() {
@@ -135,17 +136,17 @@ void Game::LoadLevel() {
     SetTextColor(WHITE);
     SetCursorPosition(-3, 3);
     conLogger->gotoxy(3, 0);
-    cout << "1UP";
+    //cout << "1UP";
     conLogger->cprintf(WHITE, "1UP");
 
     SetCursorPosition(-3, 9);
     conLogger->gotoxy(9, 0);
-    cout << "HIGH SCORE";
+    //cout << "HIGH SCORE";
     conLogger->cprintf(WHITE, "HIGH SCORE");
 
     SetCursorPosition(-3, 21);
     conLogger->gotoxy(21, 0);
-    cout << "TIMER";
+    //cout << "TIMER";
     conLogger->cprintf(WHITE, "TIMER");
     CountDownTimer = DOWN_MAX; //set the countdown time for 1 minute 15 seconds
 
@@ -267,7 +268,7 @@ void Game::LoadLevel() {
             else if (curChar == '^') {
                 level[y][x] = char(179);
             }
-            cout << level[y][x];
+            //cout << level[y][x];
             char* lvl = &level[y][x];
             conLogger->cprintf(lvl);
         }
@@ -286,7 +287,7 @@ void Game::NextLevel() {
     HideAll();
     SetCursorPosition(12, 13);
     conLogger->gotoxy(13, 15);
-    cout << "  ";
+    //cout << "  ";
     conLogger->cprintf(" ");
     for (int i = 0; i < 4; ++i) {
         SetScreenColor(WHITE);
@@ -305,12 +306,12 @@ void Game::PrintReady() {
     SetTextColor(YELLOW);
     SetCursorPosition(17, 11);
     conLogger->gotoxy(11, 20);
-    cout << "READY!";
+    //cout << "READY!";
     conLogger->cprintf(YELLOW, "READY!");
     Sleep(2000);
     SetCursorPosition(17, 11);
     conLogger->gotoxy(11, 20);
-    cout << "      ";
+    //cout << "      ";
     conLogger->cprintf("      ");
 }
 
@@ -318,7 +319,7 @@ void Game::PrintGameOver() {
     SetCursorPosition(17, 9);
     conLogger->gotoxy(9, 20);
     SetTextColor(RED);
-    cout << "GAME  OVER";
+    //cout << "GAME  OVER";
     conLogger->cprintf(RED, "GAME  OVER");
     Sleep(1000);
     gameEnd = true;  //go() while loop ends
@@ -399,7 +400,7 @@ void Game::UpdateTimers() {
         SetTextColor(oneUpColor);
         SetCursorPosition(-3, 3);
         conLogger->gotoxy(3, 0);
-        cout << "1UP";
+        //cout << "1UP";
         conLogger->cprintf("1UP");
         oneUpTimer = ONE_UP_MAX;
     }

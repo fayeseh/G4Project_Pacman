@@ -50,7 +50,7 @@ void Ghost::Move(int playerY, int playerX, CConsoleLoggerEx *Logger) {
             else if (y != GATE_Y - 1) {
                 --y;
                 SetCursorPosition(GATE_Y, GATE_X + 1);
-                cout << game->GetLevel(GATE_Y, GATE_X + 1);
+                //cout << game->GetLevel(GATE_Y, GATE_X + 1);
 
                 int baseCursor = 3;
                 Logger->gotoxy(GATE_X + 1, GATE_Y + baseCursor);
@@ -78,7 +78,7 @@ void Ghost::Move(int playerY, int playerX, CConsoleLoggerEx *Logger) {
                 dir = 's';
                 ChangeCoords(Logger);
                 SetCursorPosition(GATE_Y, GATE_X + 1);
-                cout << game->GetLevel(GATE_Y, GATE_X + 1);
+                //cout << game->GetLevel(GATE_Y, GATE_X + 1);
 
                 int baseCursor = 3;
                 Logger->gotoxy(GATE_X + 1, GATE_Y + baseCursor);
@@ -293,7 +293,7 @@ void Ghost::Dead() {
 void Ghost::Show(CConsoleLoggerEx *Logger) {
     SetTextColor(color);
     SetCursorPosition(y, x);
-    cout << icon;
+    //cout << icon;
 
     Logger->gotoxy(x, y+3);
     char* ICON = &icon;
@@ -306,7 +306,7 @@ void Ghost::Hide(CConsoleLoggerEx *Logger) {
         SetTextColor(game->GetPelletColor());
     }
     SetCursorPosition(y, x);
-    cout << game->GetLevel(y, x);
+    //cout << game->GetLevel(y, x);
 
     Logger->gotoxy(x, y+3);
     char LVL = game->GetLevel(y, x);

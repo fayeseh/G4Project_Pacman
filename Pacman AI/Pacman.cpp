@@ -30,7 +30,7 @@ void Pacman::Move(CConsoleLoggerEx *Logger) {
         if (TestForCollision() == false) {
             // replace old coordinates with a space
             SetCursorPosition(yOld, xOld);
-            cout << game->GetLevel(yOld, xOld);
+            //cout << game->GetLevel(yOld, xOld);
 
             Logger->gotoxy(xOld, yOld+3);
             char LVL = game->GetLevel(yOld, xOld);
@@ -69,7 +69,7 @@ void Pacman::GetDirection() { //Where to implement the neural network
         inputValues.push_back(game->ghosts[i]->GetY()/31.0);
     }
     game->neuralNet->feedForward(inputValues);
-    //cout<<inputValues.at(0);
+    ////cout<<inputValues.at(0);
 
     //get result from neural network
     vector<double> result; //store result from neural network in here
@@ -80,7 +80,6 @@ void Pacman::GetDirection() { //Where to implement the neural network
         result.begin(),
         max_element(result.begin(), result.end())
     );
-
     switch(thismove) {
         case 0:
             dir = 'w';
@@ -156,12 +155,12 @@ void Pacman::PrintScore(int scoreInc, CConsoleLoggerEx *Logger) {
     SetCursorPosition(-2, 0);
 
     if (score == 0) {
-        cout << setw(7) << "00";
+        //cout << setw(7) << "00";
         Logger->gotoxy(3, 1);
         Logger->cprintf("00");
     }
     else {
-        cout << setw(7) << score;
+        //cout << setw(7) << score;
         Logger->gotoxy(3, 1);
         string SCO = to_string(score);
         char* sco = &SCO[0];
@@ -169,7 +168,7 @@ void Pacman::PrintScore(int scoreInc, CConsoleLoggerEx *Logger) {
     }
     if (score > hiScore) {
         hiScore = score;
-        cout << setw(11) << hiScore;
+        //cout << setw(11) << hiScore;
         Logger->gotoxy(14, 1);
         string HISCO = to_string(hiScore);
         char* hisco = &HISCO[0];
@@ -182,14 +181,14 @@ void Pacman::PrintLives(CConsoleLoggerEx *Logger) {
     SetCursorPosition(LEVEL_HEIGHT, 2);
     Logger->gotoxy(2, LEVEL_HEIGHT+3);
     for (int i = 1; i < lives; ++i) {
-        cout << ICONS[1] << " ";
+        //cout << ICONS[1] << " ";
 
         char Icon = ICONS[1];
         char* ic = &Icon;
         Logger->cprintf(color, ic);
         Logger->cprintf(" ");
     }
-    cout << " ";
+    //cout << " ";
     Logger->cprintf(" ");
 }
 
@@ -206,7 +205,7 @@ void Pacman::PrintKillScore(CConsoleLoggerEx *Logger) {
     }
     SetTextColor(CYAN);
     SetCursorPosition(y, killX);
-    cout << scoreInc;
+    //cout << scoreInc;
 
     Logger->gotoxy(killX, y+3);
     string SCI = to_string(scoreInc);
@@ -225,7 +224,7 @@ void Pacman::PrintKillScore(CConsoleLoggerEx *Logger) {
         if (game->GetLevel(y, i) == 'o') {
             SetTextColor(game->GetPelletColor());
         }
-        cout << game->GetLevel(y, i);
+        //cout << game->GetLevel(y, i);
         char LVL = game->GetLevel(y, i);
         char* lvl = &LVL;
         Logger->cprintf(lvl);
@@ -258,7 +257,7 @@ void Pacman::Dead(CConsoleLoggerEx *Logger) {
 void Pacman::Show(CConsoleLoggerEx *Logger) {
     SetTextColor(color);
     SetCursorPosition(y, x);
-    cout << icon;
+    //cout << icon;
 
     Logger->gotoxy(x, y+3);
     char* ic = &icon;
@@ -267,7 +266,7 @@ void Pacman::Show(CConsoleLoggerEx *Logger) {
 
 void Pacman::Hide(CConsoleLoggerEx *Logger) {
     SetCursorPosition(y, x);
-    cout << game->GetLevel(y, x);
+    //cout << game->GetLevel(y, x);
 
     Logger->gotoxy(x, y+3);
     char LVL = game->GetLevel(y, x);

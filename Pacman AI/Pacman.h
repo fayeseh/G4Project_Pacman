@@ -13,7 +13,7 @@ private:
     int wait;
     int left;
     int score;
-    int hiScore;
+
     int lives;
     int super;
     int killCount;
@@ -43,6 +43,8 @@ public:
     int GetLeft()  { return left;  }
     int GetLives() { return lives; }
     int GetSuper() { return super; }
+    //int GetHiScore() { return hiScore; }
+    int hiScore;
 
     void SetY(int y)         { this->y = y;   }
     void SetX(int x)         { this->x = x;   }

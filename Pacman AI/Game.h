@@ -22,12 +22,12 @@ private:
     int CountDownTimer = DOWN_MAX;
     bool gameEnd = false;
 
-    void MainLoop();
+    void MainLoop(int &high);
 
 public:
     Game(Network* neural, CConsoleLoggerEx* Logger);
     ~Game();
-    void Go();
+    void Go(int &high);
 
     void LoadLevel();
     void NextLevel();
