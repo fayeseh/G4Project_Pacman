@@ -310,6 +310,10 @@ void Ghost::Hide(CConsoleLoggerEx *Logger) {
 
     Logger->gotoxy(x, y+3);
     char LVL = game->GetLevel(y, x);
-    char* lvl = &LVL;
-    Logger->cprintf(lvl);
+    if (game->GetLevel(y, x) == ' '){
+        Logger->cprintf(" ");
+    }
+    else {
+        Logger->cprintf(".");
+    }
 }
