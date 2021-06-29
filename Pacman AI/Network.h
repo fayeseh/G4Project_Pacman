@@ -18,8 +18,10 @@ class Network
         //get last layer of output values
         void getResults(vector<double> &resultVal);
 
-    private:
         vector<Layer> NW_layers;  //NW_layers[layerNum][neuronNum]
+
+    private:
+
 };
 
 #endif // NETWORK_H

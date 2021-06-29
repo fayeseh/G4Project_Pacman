@@ -158,6 +158,9 @@ void Pacman::PrintScore(int scoreInc, CConsoleLoggerEx *Logger) {
         //cout << setw(7) << "00";
         Logger->gotoxy(3, 1);
         Logger->cprintf("00");
+        //print highscore
+        Logger->gotoxy(14, 1);
+        Logger->cprintf("00");
     }
     else {
         //cout << setw(7) << score;

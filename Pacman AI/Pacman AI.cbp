@@ -38,8 +38,12 @@
 		<Unit filename="ConsoleLogger.h" />
 		<Unit filename="ConsoleLoggerHelper.exe" />
 		<Unit filename="Constants.h" />
+		<Unit filename="DNA.cpp" />
+		<Unit filename="DNA.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
+		<Unit filename="GeneticAlgorithm.cpp" />
+		<Unit filename="GeneticAlgorithm.h" />
 		<Unit filename="Ghost.cpp" />
 		<Unit filename="Ghost.h" />
 		<Unit filename="Network.cpp" />
