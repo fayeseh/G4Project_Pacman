@@ -14,7 +14,7 @@ class Network;
 class GeneticAlgorithm
 {
     public:
-        GeneticAlgorithm(unsigned popSIZE, float mutate, vector<int> &fitness, vector<unsigned> &topo, vector<Network*> &net);  //constructor
+        GeneticAlgorithm(unsigned popSIZE, float mutate, vector<int> &fitness, vector<unsigned> &topo, vector<Network*> &net, unsigned ID);  //constructor
         ~GeneticAlgorithm(void);  //destructor
         void initializePopulation();  //create population of DNAs
         void runGenetic();  //run genetic process
@@ -26,6 +26,7 @@ class GeneticAlgorithm
         void mutation(DNA* chromosome);  //determine to mutate weight or not depending on mutation rate
         DNA* generateRandomChild(DNA* parent);  //new children with random DNA
         vector<Network*> return_nHolder();  //function to return the next generation population to main
+        void writeToFile();
 
         unsigned populationSize;
         float mutationProbability;
@@ -33,6 +34,7 @@ class GeneticAlgorithm
         vector<int> fitnessScores;
         vector<unsigned> topology;
         vector<Network*> networks;
+        unsigned fileID;
 
     private:
 

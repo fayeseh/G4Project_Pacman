@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 
 #include "GeneticAlgorithm.h"
 #include "DNA.h"
@@ -8,13 +9,14 @@
 
 using namespace std;
 
-GeneticAlgorithm::GeneticAlgorithm(unsigned popSIZE, float mutate, vector<int> &fitness, vector<unsigned> &topo, vector<Network*> &net)
+GeneticAlgorithm::GeneticAlgorithm(unsigned popSIZE, float mutate, vector<int> &fitness, vector<unsigned> &topo, vector<Network*> &net, unsigned ID)
 {
     populationSize = popSIZE;  //save population size (number of games)
     mutationProbability = mutate;  //save mutation rate
     fitnessScores = fitness;  //save high scores (not sure if can straight use vector)
     topology = topo;  //save topology
     networks = net;  //save all networks
+    fileID = ID;
 }
 
 GeneticAlgorithm::~GeneticAlgorithm(void)
@@ -35,17 +37,24 @@ void GeneticAlgorithm::initializePopulation()
 //run genetic process
 void GeneticAlgorithm::runGenetic()
 {
+    //cout << "  Called runGenetic" << endl;
     //update fitness scores for each DNA
     for(unsigned i = 0; i < population.size(); i++)
     {
         updateFitness(population[i], i);
+        //cout << "  Updated fitness to population" << endl;
     }
 
     //sort the DNA according to top
     selectionSort();
+    //cout << "  Done selectionSort" << endl;
+
+    //save the best game of this generation
+    writeToFile();
 
     //produce children
     generateNew();
+    //cout << "  Done generate New" << endl;
 
 }
 
@@ -77,22 +86,29 @@ bool GeneticAlgorithm::comparator(DNA* a, DNA* b)
 //produce children with the selected DNAs
 void GeneticAlgorithm::generateNew()
 {
+    //cout << "    Called generateNew" << endl;
     //20% of top fitness parents
     int top = populationSize * 0.2;
 
     //crossover until 60% of the population is new children
     int maxChildren = populationSize*0.6;
+
+    //cout << "    Calculated top & maxChildren" << endl;
     for(unsigned i = 0; i < maxChildren; i++)
     {
         //choose random 2 parents
         int randomNum1 = rand()%top;
         int randomNum2 = rand()%top;
+        //cout << "    Chose 2 random num" << endl;
         //the children add behind the top population parents
         DNA* temp = crossover(population[randomNum1], population[randomNum2]);
+        //cout << "    Done crossover" << endl;
         population.push_back(temp);
+        //cout << "    Added children to population" << endl;
 
         //mutate the 60% children generated
         mutation(population.at(i+top));
+        //cout << "    Done mutation" << endl;
     }
 
     //fill in the remaining 20% with random DNA
@@ -185,3 +201,16 @@ vector<Network *> GeneticAlgorithm::return_nHolder()
     return network;
 }
 
+void GeneticAlgorithm::writeToFile()
+{
+    vector<double> weightsToBeSaved = population.at(0)->networkToWeights(population.at(0)->neuralNetwork);
+    ofstream file;
+
+    string fileName = "Generation"+ to_string(fileID)+".txt";
+    file.open(fileName);
+    for(int i = 0; i < weightsToBeSaved.size(); i++)
+    {
+        file << weightsToBeSaved.at(i) << endl;
+    }
+    file.close();
+}
