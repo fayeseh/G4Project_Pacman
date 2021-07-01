@@ -291,7 +291,7 @@ void Ghost::Dead() {
 }
 
 void Ghost::Show(CConsoleLoggerEx *Logger) {
-    SetTextColor(color);
+    //SetTextColor(color);
     SetCursorPosition(y, x);
     //cout << icon;
 
@@ -302,9 +302,9 @@ void Ghost::Show(CConsoleLoggerEx *Logger) {
 
 void Ghost::Hide(CConsoleLoggerEx *Logger) {
     SetTextColor(WHITE);
-    if (game->GetLevel(y, x) == 'o') {
-        SetTextColor(game->GetPelletColor());
-    }
+    //if (game->GetLevel(y, x) == 'o') {
+        //SetTextColor(game->GetPelletColor());
+    //}
     SetCursorPosition(y, x);
     //cout << game->GetLevel(y, x);
 

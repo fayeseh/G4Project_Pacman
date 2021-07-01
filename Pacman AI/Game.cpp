@@ -160,7 +160,7 @@ void Game::LoadLevel() {
     for (int y = 0; y < LEVEL_HEIGHT; ++y) {
         for (int x = 0; x < LEVEL_WIDTH; ++x) {
             curChar = levelMap[y][x];
-            SetTextColor(DARK_BLUE);
+            //SetTextColor(DARK_BLUE);
             switch (curChar) {
             case 'X':
                 player->SetYInit(y);
@@ -290,10 +290,10 @@ void Game::NextLevel() {
     //cout << "  ";
     conLogger->cprintf(" ");
     for (int i = 0; i < 4; ++i) {
-        SetScreenColor(WHITE);
+        //SetScreenColor(WHITE);
         player->Show(conLogger);
         Sleep(200);
-        SetScreenColor(DARK_BLUE);
+        //SetScreenColor(DARK_BLUE);
         player->Show(conLogger);
         Sleep(200);
     }
@@ -303,7 +303,7 @@ void Game::NextLevel() {
 }
 
 void Game::PrintReady() {
-    SetTextColor(YELLOW);
+    //SetTextColor(YELLOW);
     SetCursorPosition(17, 11);
     conLogger->gotoxy(11, 20);
     //cout << "READY!";
@@ -318,7 +318,7 @@ void Game::PrintReady() {
 void Game::PrintGameOver() {
     SetCursorPosition(17, 9);
     conLogger->gotoxy(9, 20);
-    SetTextColor(RED);
+    //SetTextColor(RED);
     //cout << "GAME  OVER";
     conLogger->cprintf(RED, "GAME  OVER");
     Sleep(1000);
@@ -397,7 +397,7 @@ void Game::UpdateTimers() {
         else {
             oneUpColor = WHITE;
         }
-        SetTextColor(oneUpColor);
+        //SetTextColor(oneUpColor);
         SetCursorPosition(-3, 3);
         conLogger->gotoxy(3, 0);
         //cout << "1UP";
@@ -415,7 +415,7 @@ void Game::UpdateTimers() {
         else {
             pelletColor = WHITE;
         }
-        SetTextColor(pelletColor);
+        //SetTextColor(pelletColor);
         for (int i = 0; i < 4; ++i) {
             pellets[i]->Print(conLogger);
         }

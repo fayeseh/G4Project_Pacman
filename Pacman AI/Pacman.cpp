@@ -180,7 +180,7 @@ void Pacman::PrintScore(int scoreInc, CConsoleLoggerEx *Logger) {
 }
 
 void Pacman::PrintLives(CConsoleLoggerEx *Logger) {
-    SetTextColor(color);
+    //SetTextColor(color);
     SetCursorPosition(LEVEL_HEIGHT, 2);
     Logger->gotoxy(2, LEVEL_HEIGHT+3);
     for (int i = 1; i < lives; ++i) {
@@ -206,7 +206,7 @@ void Pacman::PrintKillScore(CConsoleLoggerEx *Logger) {
     if (x > LEVEL_WIDTH - length) {
         killX = LEVEL_WIDTH - length;
     }
-    SetTextColor(CYAN);
+    //SetTextColor(CYAN);
     SetCursorPosition(y, killX);
     //cout << scoreInc;
 
@@ -220,12 +220,12 @@ void Pacman::PrintKillScore(CConsoleLoggerEx *Logger) {
     SetCursorPosition(y, killX);
     Logger->gotoxy(killX, y+3);
     for (int i = killX; i < killX + length; ++i) {
-        SetTextColor(DARK_BLUE);
+        //SetTextColor(DARK_BLUE);
         if (game->GetLevel(y, i) == char(250)) {
-            SetTextColor(WHITE);
+            //SetTextColor(WHITE);
         }
         if (game->GetLevel(y, i) == 'o') {
-            SetTextColor(game->GetPelletColor());
+            //SetTextColor(game->GetPelletColor());
         }
         //cout << game->GetLevel(y, i);
         char LVL = game->GetLevel(y, i);
@@ -258,7 +258,7 @@ void Pacman::Dead(CConsoleLoggerEx *Logger) {
 }
 
 void Pacman::Show(CConsoleLoggerEx *Logger) {
-    SetTextColor(color);
+    //SetTextColor(color);
     SetCursorPosition(y, x);
     //cout << icon;
 
