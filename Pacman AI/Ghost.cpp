@@ -1,10 +1,10 @@
 #include <iostream>
 
 #include "Constants.h"
-
 #include "Game.h"
 #include "Ghost.h"
 #include "SetConsoleAttributes.h"
+#include "ConsoleLogger.h"
 
 using namespace std;
 
@@ -12,7 +12,7 @@ Ghost::Ghost(Game *const g)
 : game(g) {}
 
 // move the ghost based on the current mode every time the wait timer reaches 0
-void Ghost::Move(int playerY, int playerX) {
+void Ghost::Move(int playerY, int playerX, CConsoleLoggerEx *Logger) {
     if (wait) {
         --wait;
     }
@@ -21,14 +21,14 @@ void Ghost::Move(int playerY, int playerX) {
         // if 'waiting'
         // bounce up and down
         case 'w':
-            Hide();
+            Hide(Logger);
             if (y == GATE_Y + 2) {
                 ++y;
             }
             else {
                 --y;
             }
-            Show();
+            Show(Logger);
             wait = GHOST_MAX;
             break;
         // if 'exiting'
@@ -36,7 +36,7 @@ void Ghost::Move(int playerY, int playerX) {
         // after exiting the gate if the player is super pacman, 'run'
         // otherwise, 'chase'
         case 'e':
-            Hide();
+            Hide(Logger);
             wait = GHOST_MAX;
             if (y > GATE_Y + 1) {
                 --y;
@@ -50,7 +50,13 @@ void Ghost::Move(int playerY, int playerX) {
             else if (y != GATE_Y - 1) {
                 --y;
                 SetCursorPosition(GATE_Y, GATE_X + 1);
-                cout << game->GetLevel(GATE_Y, GATE_X + 1);
+                //cout << game->GetLevel(GATE_Y, GATE_X + 1);
+
+                int baseCursor = 3;
+                Logger->gotoxy(GATE_X + 1, GATE_Y + baseCursor);
+                char LVL = game->GetLevel(GATE_Y, GATE_X + 1);
+                char* lvl = &LVL;
+                Logger->cprintf(lvl);
             }
             else {
                 modeOld = mode;
@@ -63,16 +69,23 @@ void Ghost::Move(int playerY, int playerX) {
                 dirOld = 'w';
                 wait = 0;
             }
-            Show();
+            Show(Logger);
             break;
         // if 'entering'
         // enter the ghost house, then 'exit'
         case 'n':
             if (y != GATE_Y + 1) {
                 dir = 's';
-                ChangeCoords();
+                ChangeCoords(Logger);
                 SetCursorPosition(GATE_Y, GATE_X + 1);
-                cout << game->GetLevel(GATE_Y, GATE_X + 1);
+                //cout << game->GetLevel(GATE_Y, GATE_X + 1);
+
+                int baseCursor = 3;
+                Logger->gotoxy(GATE_X + 1, GATE_Y + baseCursor);
+                char LVL = game->GetLevel(GATE_Y, GATE_X + 1);
+                char* lvl = &LVL;
+                Logger->cprintf(lvl);
+
                 wait = DEAD_MAX;
             }
             else {
@@ -91,11 +104,11 @@ void Ghost::Move(int playerY, int playerX) {
             }
             if (mode != modeOld) {
                 dir = dirOpp;
-                ChangeCoords();
+                ChangeCoords(Logger);
                 modeOld = mode;
             }
             else {
-                RandomDirection();
+                RandomDirection(Logger);
             }
             dirOld = dir;
             wait = GHOST_MAX;
@@ -109,7 +122,7 @@ void Ghost::Move(int playerY, int playerX) {
             }
             if (mode != modeOld) {
                 dir = dirOpp;
-                ChangeCoords();
+                ChangeCoords(Logger);
                 modeOld = mode;
             }
             else {
@@ -118,7 +131,7 @@ void Ghost::Move(int playerY, int playerX) {
                 bool right = x < playerX;
                 bool left = x > playerX;
                 bool favorableDirs[4] = { up, left, down, right };
-                TargetObject(favorableDirs);
+                TargetObject(favorableDirs, Logger);
             }
             dirOld = dir;
             wait = GHOST_MAX;
@@ -132,7 +145,7 @@ void Ghost::Move(int playerY, int playerX) {
             }
             if (mode != modeOld) {
                 dir = dirOpp;
-                ChangeCoords();
+                ChangeCoords(Logger);
                 modeOld = mode;
             }
             else {
@@ -141,7 +154,7 @@ void Ghost::Move(int playerY, int playerX) {
                 bool right = !(x < playerX);
                 bool left = !(x > playerX);
                 bool favorableDirs[4] = { up, left, down, right };
-                TargetObject(favorableDirs);
+                TargetObject(favorableDirs, Logger);
             }
             dirOld = dir;
             wait = RUN_MAX;
@@ -157,7 +170,7 @@ void Ghost::Move(int playerY, int playerX) {
                 bool right = x < GATE_X;
                 bool left = x > GATE_X;
                 bool favorableDirs[4] = { up, left, down, right };
-                TargetObject(favorableDirs);
+                TargetObject(favorableDirs, Logger);
             }
             else {
                 mode = 'n';
@@ -168,7 +181,7 @@ void Ghost::Move(int playerY, int playerX) {
     }
 }
 
-void Ghost::TargetObject(bool favorableDirs[4]) {
+void Ghost::TargetObject(bool favorableDirs[4], CConsoleLoggerEx *Logger) {
     int good = 0;
     char goodDirs[4] = {' ',' ',' ',' '};
     for (int i = 0; i < 4; ++i) {
@@ -179,15 +192,15 @@ void Ghost::TargetObject(bool favorableDirs[4]) {
         }
     }
     if (good == 0) {
-        RandomDirection();
+        RandomDirection(Logger);
     }
     else {
         dir = goodDirs[rand() % good];
-        ChangeCoords();
+        ChangeCoords(Logger);
     }
 }
 
-void Ghost::RandomDirection() {
+void Ghost::RandomDirection(CConsoleLoggerEx *Logger) {
     GetOpposite();
     // pick a random direction that results in no collision
     do {
@@ -196,7 +209,7 @@ void Ghost::RandomDirection() {
             dir = ALL_DIRS[rand() % 4];
         } while (dir == dirOpp);
     } while (TestForCollision() == true);
-    ChangeCoords();
+    ChangeCoords(Logger);
 }
 
 bool Ghost::TestForCollision() {
@@ -228,8 +241,8 @@ bool Ghost::TestForCollision() {
     return true;
 }
 
-void Ghost::ChangeCoords() {
-    Hide();
+void Ghost::ChangeCoords(CConsoleLoggerEx *Logger) {
+    Hide(Logger);
     if (dir == 'a') {
         if (x == 0) {
             x = LEVEL_WIDTH - 1;
@@ -252,7 +265,7 @@ void Ghost::ChangeCoords() {
     if (dir == 's') {
         ++y;
     }
-    Show();
+    Show(Logger);
 }
 
 void Ghost::GetOpposite() {
@@ -277,17 +290,30 @@ void Ghost::Dead() {
     icon = DEAD_GHOST_ICON;
 }
 
-void Ghost::Show() {
-    SetTextColor(color);
+void Ghost::Show(CConsoleLoggerEx *Logger) {
+    //SetTextColor(color);
     SetCursorPosition(y, x);
-    cout << icon;
+    //cout << icon;
+
+    Logger->gotoxy(x, y+3);
+    char* ICON = &icon;
+    Logger->cprintf(ICON);
 }
 
-void Ghost::Hide() {
+void Ghost::Hide(CConsoleLoggerEx *Logger) {
     SetTextColor(WHITE);
-    if (game->GetLevel(y, x) == 'o') {
-        SetTextColor(game->GetPelletColor());
-    }
+    //if (game->GetLevel(y, x) == 'o') {
+        //SetTextColor(game->GetPelletColor());
+    //}
     SetCursorPosition(y, x);
-    cout << game->GetLevel(y, x);
+    //cout << game->GetLevel(y, x);
+
+    Logger->gotoxy(x, y+3);
+    char LVL = game->GetLevel(y, x);
+    if (game->GetLevel(y, x) == ' '){
+        Logger->cprintf(" ");
+    }
+    else {
+        Logger->cprintf(".");
+    }
 }

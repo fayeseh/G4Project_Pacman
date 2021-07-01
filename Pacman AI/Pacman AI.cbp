@@ -34,9 +34,16 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="ConsoleLogger.cpp" />
+		<Unit filename="ConsoleLogger.h" />
+		<Unit filename="ConsoleLoggerHelper.exe" />
 		<Unit filename="Constants.h" />
+		<Unit filename="DNA.cpp" />
+		<Unit filename="DNA.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
+		<Unit filename="GeneticAlgorithm.cpp" />
+		<Unit filename="GeneticAlgorithm.h" />
 		<Unit filename="Ghost.cpp" />
 		<Unit filename="Ghost.h" />
 		<Unit filename="Network.cpp" />
@@ -49,11 +56,9 @@
 		<Unit filename="Pellet.h" />
 		<Unit filename="SetConsoleAttributes.cpp" />
 		<Unit filename="SetConsoleAttributes.h" />
-		<Unit filename="include/InputDataPreperation.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="pacplusplusman.ico" />
 		<Unit filename="resource.h" />
-		<Unit filename="src/InputDataPreperation.cpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

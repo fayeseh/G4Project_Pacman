@@ -20,15 +20,15 @@ class Neuron
         //calculate input with weights
         void calculateOutput(Layer &prevLayer);
 
-
-    private:
-        double N_outputVal;  //neuron's output value
         unsigned N_index;  //neuron's index number
-        vector<double> N_weights;  //weights for next layer
+        vector<double> N_weights;  //weights
         //function to return random values for weights
         double randomWeight(void);
         //private function to return value in between -1 & 1
         double transferFunction(double x);
+
+    private:
+        double N_outputVal;  //neuron's output value
 };
 
 #endif // NEURON_H

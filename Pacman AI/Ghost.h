@@ -1,8 +1,7 @@
 #ifndef GHOST_H
 #define GHOST_H
 
-
-
+#include "ConsoleLogger.h"
 
 class Game;
 
@@ -26,15 +25,15 @@ private:
 public:
 
     Ghost(Game *const g);
-    void Move(int, int);
-    void TargetObject(bool[4]);
-    void RandomDirection();
+    void Move(int, int, CConsoleLoggerEx *Logger);
+    void TargetObject(bool[4], CConsoleLoggerEx *Logger);
+    void RandomDirection(CConsoleLoggerEx *Logger);
     bool TestForCollision();
-    void ChangeCoords();
+    void ChangeCoords(CConsoleLoggerEx *Logger);
     void GetOpposite();
     void Dead();
-    void Show();
-    void Hide();
+    void Show(CConsoleLoggerEx *Logger);
+    void Hide(CConsoleLoggerEx *Logger);
 
     int GetY()         { return y;         }
     int GetX()         { return x;         }
