@@ -23,14 +23,15 @@ int main() {
     CConsoleLoggerEx* cHolder[population];  //console holder
 
     //initialize neural network
-    unsigned numData = 10;
-    unsigned numNeurons = 5;  //in hidden layers
+    unsigned numData = 14;
+    unsigned numNeurons = 7;  //in hidden layers
     unsigned numOutput = 4;  //w,a,s,d
 
     vector<unsigned> topology;
     //first layer
     topology.push_back(numData);
     //hidden layers
+    topology.push_back(numNeurons);
     topology.push_back(numNeurons);
     //last layer
     topology.push_back(numOutput);
@@ -78,11 +79,6 @@ int main() {
         thread t23(createGame, cHolder[22], nHolder[22], ref(fHolder[22]));
         thread t24(createGame, cHolder[23], nHolder[23], ref(fHolder[23]));
         thread t25(createGame, cHolder[24], nHolder[24], ref(fHolder[24]));
-//        thread t26(createGame, cHolder[25], nHolder[25], ref(fHolder[25]));
-//        thread t27(createGame, cHolder[26], nHolder[26], ref(fHolder[26]));
-//        thread t28(createGame, cHolder[27], nHolder[27], ref(fHolder[27]));
-//        thread t29(createGame, cHolder[28], nHolder[28], ref(fHolder[28]));
-//        thread t30(createGame, cHolder[29], nHolder[29], ref(fHolder[29]));
 
         t1.join();
         t2.join();
@@ -109,11 +105,6 @@ int main() {
         t23.join();
         t24.join();
         t25.join();
-//        t26.join();
-//        t27.join();
-//        t28.join();
-//        t29.join();
-//        t30.join();
 
         //convert array to vector for network
         vector<Network*> networks;

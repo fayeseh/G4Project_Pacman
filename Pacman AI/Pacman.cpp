@@ -58,18 +58,37 @@ void Pacman::Move(CConsoleLoggerEx *Logger) {
     }
 }
 
+//check if the radius of pacman are walls
+double Pacman::CheckForPath(int y, int x)
+{
+    if(game->GetLevel(y, x) == ' ' || game->GetLevel(y, x) == 'o' || game->GetLevel(y, x) == char(250))
+        return 0.0;
+    else
+        return 1.0;
+
+}
+
+
 void Pacman::GetDirection() { //Where to implement the neural network
     dir = 'x';
 
     vector<double> inputValues;
+
+    //pacman and ghosts coordinates
     inputValues.push_back(GetX()/28.0);
     inputValues.push_back(GetY()/31.0);
     for(int i = 0; i < 4; ++i) {
         inputValues.push_back(game->ghosts[i]->GetX()/28.0);
         inputValues.push_back(game->ghosts[i]->GetY()/31.0);
     }
+
+    //pacman radius if it's walls
+    inputValues.push_back(CheckForPath(GetY(), GetX()+1));  //right
+    inputValues.push_back(CheckForPath(GetY(), GetX()-1));  //left
+    inputValues.push_back(CheckForPath(GetY()+1, GetX()));  //down
+    inputValues.push_back(CheckForPath(GetY()-1, GetX()));  //up
+
     game->neuralNet->feedForward(inputValues);
-    ////cout<<inputValues.at(0);
 
     //get result from neural network
     vector<double> result; //store result from neural network in here

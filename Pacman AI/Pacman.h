@@ -27,6 +27,7 @@ private:
 public:
     Pacman(Game *const g);
     void Move(CConsoleLoggerEx *Logger);
+    double CheckForPath(int y, int x);
     void GetDirection();
     bool TestForCollision();
     void PrintScore(int, CConsoleLoggerEx *Logger);
